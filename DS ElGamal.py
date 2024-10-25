@@ -27,13 +27,6 @@ def isPrime(n):
         i = i + 6
     return True
 
-# Hàm sinh số nguyên tố ngẫu nhiên có bit cho trước
-def generate_large_prime(bits=4090):
-    while True:
-        prime_candidate = random.getrandbits(bits) | 1
-        if isPrime(prime_candidate):
-            return prime_candidate
-
 # Hàm tìm thừa số nguyên thủy của p
 def find_primitive_root(p):
     # p là số nguyên tố, phi(p) = p-1
@@ -103,28 +96,29 @@ def gcd(a, b):
 
 # Chương trình chính
 def main():
-    # Bước 1: Sinh số nguyên tố p có độ lớn 4090 bits
-    # Sinh số nguyên tố dạng Safe Prime và tìm thừa số nguyên thủy
-    p = generate_safe_prime(1024)  # Safe Prime có 1024 bits
-    print(f"Số nguyên tố dạng Safe Prime p: {p}")
+    bits = 2048
+    # Bước 1: Sinh số nguyên tố p
+    p = generate_safe_prime(bits)
+    print(f"Số nguyên tố p {bits} bits: {p}")
     
     # Bước 2: Tìm thừa số nguyên thủy g của p
     g = primitive_root(p)
-    print(f"Thừa số nguyên thủy g của p: {g}")
+    print(f"Thừa số nguyên thủy của p: {g}")
 
     # Bước 3: Tạo khóa ElGamal
     private_key, public_key = generate_keys(p, g)
-    print(f"Khóa riêng tư (x): {private_key}")
-    print(f"Khóa công khai (y): {public_key}")
+    print(f"Khóa riêng tư: {private_key}")
+    print(f"Khóa công khai: {public_key}")
     
     # Bước 4: Ký thông điệp
     message = "tranhoangluong"
+    print(f"Thông điệp: {message}")
     signature = elgamal_sign(message, p, g, private_key)
-    print(f"Chữ ký (r, s): {signature}")
+    print(f"Chữ ký: {signature}")
     
     # Bước 5: Xác minh chữ ký
     is_valid = elgamal_verify(message, signature, p, g, public_key)
-    print(f"Kết quả xác minh chữ ký: {'Hợp lệ' if is_valid else 'Không hợp lệ'}")
+    print(f"Xác minh chữ ký: {'Hợp lệ' if is_valid else 'Không hợp lệ'}")
 
 # Gọi chương trình chính
 if __name__ == "__main__":
