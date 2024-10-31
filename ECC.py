@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 class EllipticCurve:
     def __init__(self, a, b, p):
         # y^2 = x^3 + ax + b (mod p)
@@ -39,7 +41,9 @@ class EllipticCurve:
         while k:
             if k & 1:
                 result = self.point_add(result, addend)
+
             addend = self.point_add(addend, addend)
+
             k >>= 1
         
         return result
@@ -54,7 +58,7 @@ class EllipticCurve:
                     #print(f"({x},{y})")
         return points
 
-curve = EllipticCurve(a=1, b=3, p=10000)
+curve = EllipticCurve(a=3, b=55, p=827)
 
 # Tạo ra các điểm ở trên đường cong
 points = curve.generate_points()
@@ -63,10 +67,32 @@ points = curve.generate_points()
 num_points = len(points) + 1  # +1 điểm ở vô cùng
 print(f"Number of points: {num_points}")
 
-P = (6, 15)
+# Tính tổng số điểm trên đường cong
+num_points = len(points) + 1  # +1 điểm ở vô cùng
+print(f"Số điểm trên đường cong: {num_points}")
+
+# Chọn điểm P
+P = (50, 53)
 print(f"Is P on curve? {curve.is_on_curve(*P)}")
 
+# Điểm đối của P 
+p1 = curve.scalar_mult((num_points - 1), P)
+print(f"Điểm đối của P là {p1}")
+
 # Bảng cửu chương
-for k in range(1,839):
+"""for k in range(1,num_points):
     kP = curve.scalar_mult(k, P)
-    print(f"{k} * P = {kP}")
+    print(f"{k} * P = {kP}")"""
+
+# Vẽ ra các điểm
+"""X = [point[0] for point in points]
+Y = [point[1] for point in points]
+
+plt.figure(figsize=(8, 8))
+plt.scatter(X, Y, color='blue')
+plt.title(f'Elliptic Curve y^2 = x^3 + {curve.a}x + {curve.b} (mod {curve.p})')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.grid(True)
+plt.show()"""
+
