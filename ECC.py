@@ -58,22 +58,22 @@ class EllipticCurve:
                     #print(f"({x},{y})")
         return points
 
-curve = EllipticCurve(a=3, b=55, p=827)
+curve = EllipticCurve(a=1, b=5, p=12347)
+print(f"a = {curve.a}")
+print(f"b = {curve.b}")
 
 # Tạo ra các điểm ở trên đường cong
 points = curve.generate_points()
 
 # Tính tổng số điểm trên đường cong
 num_points = len(points) + 1  # +1 điểm ở vô cùng
-print(f"Number of points: {num_points}")
-
-# Tính tổng số điểm trên đường cong
-num_points = len(points) + 1  # +1 điểm ở vô cùng
 print(f"Số điểm trên đường cong: {num_points}")
 
 # Chọn điểm P
-P = (50, 53)
-print(f"Is P on curve? {curve.is_on_curve(*P)}")
+P = (197, 123)
+print(f"P = {P}")
+print(f"P có thuộc đường cong không: {'Có' if curve.is_on_curve(*P) else 'Không'}")
+
 
 # Điểm đối của P 
 p1 = curve.scalar_mult((num_points - 1), P)
