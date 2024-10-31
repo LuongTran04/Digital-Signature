@@ -94,7 +94,7 @@ if __name__ == '__main__':
     print("Your public key is ", public)
     print("Your private key is ", private)
 
-    message = input("Enter a message to encrypt with your public key: ")
+    message = "hoanhtho"
     encrypted_msg = encrypt(public, message)
 
     print("Your encrypted message is: ", ''.join(map(lambda x: str(x), encrypted_msg)))
